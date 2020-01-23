@@ -16,6 +16,6 @@ class Transaction
   # (or in a slide)
   # then show what happens with the tests
   def initialize(value)
-    @value = 0
+    @value = value
   end
 end
