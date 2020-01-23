@@ -2,7 +2,7 @@ require 'rspec'
 require_relative '../account.rb'
 
 describe Account do
-  let(:source) { Source.new('Internet Banking') }
+  let(:source) { Object.new }
   context 'logic tests' do
     it 'opened with zero plus zero value transaction' do
       account = Account.new(0)
