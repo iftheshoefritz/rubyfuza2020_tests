@@ -10,12 +10,22 @@ class Account
 end
 
 class Transaction
-  attr_reader :value
+  attr_reader :value, :source
 
   # at each stage, demonstrate that the code is broken in the console
   # (or in a slide)
   # then show what happens with the tests
-  def initialize(value)
+  # extra params in constructor are the less hidden equivalent of required validations
+  def initialize(value, source)
     @value = value
+    @source = source
+  end
+end
+
+class Source
+  attr_reader :name
+
+  def initialize(name)
+    @name = name
   end
 end
