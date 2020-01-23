@@ -1,11 +1,15 @@
 class Account
-  attr_reader :balance
   def initialize(opening_balance)
     @balance = opening_balance
+    @transactions = []
   end
 
   def add_transaction(tx)
-    @balance += tx.value
+    @transactions << tx
+  end
+
+  def balance
+    @transactions.map(&:value).inject(:+)
   end
 end
 
