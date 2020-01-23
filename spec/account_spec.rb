@@ -2,7 +2,7 @@ require 'rspec'
 require_relative '../account.rb'
 
 describe Account do
-  let(:source) { Object.new }
+  let(:source) { double('Source') }
   context 'logic tests' do
     it 'opened with zero plus zero value transaction' do
       account = Account.new(0)
@@ -85,5 +85,18 @@ describe Account do
       account.add_transaction(tx2)
       expect(account.balance).to eq(2000)
     end
+  end
+
+  def transaction_with_value(value)
+    Transaction.new(value, Source.new('Internet Banking'))
+    # or
+    unrelated_dependency = Object.new
+    Transaction.new(value, unrelated_dependency)
+    # or
+    Transaction.new(value, double('Source'))
+    # or
+    build :transaction, value: 1000 # factorygirl hides the source param (but it is there!)
+    # or if the source param is optional
+    # Transaction.new(value)
   end
 end
