@@ -2,25 +2,26 @@ require 'rspec'
 require_relative '../account.rb'
 
 describe Account do
+  let(:source) { Source.new('Internet Banking') }
   context 'logic tests' do
     it 'opened with zero plus zero value transaction' do
       account = Account.new(0)
-      tx = Transaction.new(0, Source.new('Internet Banking'))
+      tx = Transaction.new(0, source)
       account.add_transaction(tx)
       expect(account.balance).to eq(0 + tx.value)
     end
 
     it 'zero plus positive transaction' do
       account = Account.new(0)
-      tx = Transaction.new(1000, Source.new('Internet Banking'))
+      tx = Transaction.new(1000, source)
       account.add_transaction(tx)
       expect(account.balance).to eq(0 + tx.value)
     end
 
     it 'balance after two deposits' do
       account = Account.new(0)
-      tx1 = Transaction.new(1000, Source.new('Internet Banking'))
-      tx2 = Transaction.new(1000, Source.new('Internet Banking'))
+      tx1 = Transaction.new(1000, source)
+      tx2 = Transaction.new(1000, source)
       account.add_transaction(tx1)
       account.add_transaction(tx2)
       expect(account.balance).to eq(tx1.value + tx2.value)
@@ -30,7 +31,7 @@ describe Account do
   context 'explicit values' do
     it 'opened with zero plus zero value transaction' do
       account = Account.new(0)
-      tx = Transaction.new(0, Source.new('Internet Banking'))
+      tx = Transaction.new(0, source)
       account.add_transaction(tx)
       expect(account.balance).to eq(0)
     end
@@ -44,8 +45,8 @@ describe Account do
 
     it 'balance after two deposits is the sum of the values' do
       account = Account.new(0)
-      tx1 = Transaction.new(1000, Source.new('Internet Banking'))
-      tx2 = Transaction.new(1000, Source.new('Internet Banking'))
+      tx1 = Transaction.new(1000, source)
+      tx2 = Transaction.new(1000, source)
       account.add_transaction(tx1)
       account.add_transaction(tx2)
       expect(account.balance).to eq(2000)
@@ -85,6 +86,4 @@ describe Account do
       expect(account.balance).to eq(2000)
     end
   end
-
-
 end
