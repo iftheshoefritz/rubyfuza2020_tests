@@ -8,14 +8,14 @@ describe Account do
       account = Account.new(0)
       tx = Transaction.new(0, source)
       account.add_transaction(tx)
-      expect(account.balance).to eq(0 + tx.value)
+      expect(account.balance).to eq(tx.value)
     end
 
     it 'zero plus positive transaction' do
       account = Account.new(0)
       tx = Transaction.new(1000, source)
       account.add_transaction(tx)
-      expect(account.balance).to eq(0 + tx.value)
+      expect(account.balance).to eq(tx.value)
     end
 
     it 'balance after two deposits' do
@@ -25,6 +25,46 @@ describe Account do
       account.add_transaction(tx1)
       account.add_transaction(tx2)
       expect(account.balance).to eq(tx1.value + tx2.value)
+    end
+  end
+
+  context 'mocking' do
+    it 'opened with zero plus zero value transaction' do
+      account = Account.new(0)
+      tx = Transaction.new(0, source)
+      account.add_transaction(tx)
+      expect(tx).to receive(:value).and_call_original
+      expect(account.balance).to eq(0)
+    end
+
+    it 'zero plus positive transaction' do
+      account = Account.new(0)
+      tx = Transaction.new(1000, source)
+      account.add_transaction(tx)
+      expect(tx).to receive(:value).and_call_original
+      expect(account.balance).to eq(1000)
+    end
+
+    it 'balance after two deposits' do
+      account = Account.new(0)
+      tx1 = Transaction.new(1000, source)
+      tx2 = Transaction.new(1000, source)
+      account.add_transaction(tx1)
+      account.add_transaction(tx2)
+      expect(tx1).to receive(:value).and_call_original
+      expect(tx2).to receive(:value).and_call_original
+      expect(account.balance).to eq(2000)
+    end
+  end
+
+  context 'private method' do
+    it 'opened with zero plus zero value transaction' do
+    end
+
+    it 'zero plus positive transaction' do
+    end
+
+    it 'balance after two deposits' do
     end
   end
 
